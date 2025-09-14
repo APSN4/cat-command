@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
 #include "parser.h"
 
 void print_plain_text(char* path) {
@@ -20,9 +20,29 @@ void print_plain_text(char* path) {
     fileSize = ftell(pFile);
     rewind(pFile);
 
-    char str[8192];
-    while (fgets(str, fileSize, pFile) != NULL) {
+    char *str = malloc(MEM_BLOCK);
+    long pos;
+    while (fgets(str, *str, pFile) != NULL) {
+        if (strchr(str, '\n') == NULL) {
+            char *temp = realloc(str, MEM_BLOCK * 2);
+            if (temp == NULL) {
+                printf("Could not reallocate memory!\n");
+                exit(1);
+            }
+            str = temp;
+            temp = NULL;
+            continue;
+        }
         printf("%s", str);
+
+        char *temp = realloc(str, MEM_BLOCK);
+        if (temp == NULL) {
+            printf("Could not reallocate memory!\n");
+            exit(1);
+        }
+        str = temp;
+        temp = NULL;
     }
+    free(str);
     fclose(pFile);
 }
