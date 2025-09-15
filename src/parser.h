@@ -9,7 +9,7 @@
 
 #define COMPLETE 1
 #define ERROR 0
-#define MEM_BLOCK 128
+#define MEM_BLOCK 16
 
 /* min/max */
 #undef min

@@ -20,29 +20,29 @@ void print_plain_text(char* path) {
     fileSize = ftell(pFile);
     rewind(pFile);
 
-    char *str = malloc(MEM_BLOCK);
-    long pos;
-    while (fgets(str, *str, pFile) != NULL) {
-        if (strchr(str, '\n') == NULL) {
-            char *temp = realloc(str, MEM_BLOCK * 2);
+    int size_buf = MEM_BLOCK;
+    char *str = calloc(size_buf, sizeof(char));
+    char str_new[MEM_BLOCK];
+    while (fgets(str_new, MEM_BLOCK, pFile) != NULL) {
+        if (strchr(str_new, '\n') == NULL) {
+            size_buf *= 2;
+            char *temp = realloc(str, size_buf);
             if (temp == NULL) {
                 printf("Could not reallocate memory!\n");
                 exit(1);
             }
             str = temp;
+            strcat(str, str_new);
             temp = NULL;
             continue;
         }
+        strcat(str, str_new);
         printf("%s", str);
 
-        char *temp = realloc(str, MEM_BLOCK);
-        if (temp == NULL) {
-            printf("Could not reallocate memory!\n");
-            exit(1);
-        }
-        str = temp;
-        temp = NULL;
+        str[0] = '\0';
+        size_buf = MEM_BLOCK;
     }
+    printf("%s", str);
     free(str);
     fclose(pFile);
 }
