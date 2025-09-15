@@ -10,15 +10,18 @@ This project aims to create a fully-featured analog of the `cat` command found i
 
 ✅ **Completed:**
 - Basic project structure with CMake build system
-- Simple file reading functionality
+- Enhanced file reading functionality with dynamic memory allocation
 - Basic command-line argument parsing
 - MIT License included
+- **Fixed buffer size issues** - implemented proper dynamic memory management
+- **Improved memory handling** - automatic buffer resizing for long lines
+- **Proper resource cleanup** - memory deallocation and file closing
 
 🚧 **In Progress/Needs Implementation:**
 - Multiple files support
 - Standard input handling
 - Command-line options
-- Proper error handling
+- Enhanced error handling (basic error handling implemented)
 - Cross-platform compatibility
 
 ## Implementation Roadmap
@@ -26,8 +29,8 @@ This project aims to create a fully-featured analog of the `cat` command found i
 ### Phase 1: Core Functionality Fixes ⚠️ **HIGH PRIORITY**
 
 1. **Fix Current Bugs**
-   - [ ] Fix buffer size issue in `fgets()` call (currently using `fileSize` instead of buffer size)
-   - [ ] Improve memory management and file handling
+   - [x] ~~Fix buffer size issue in `fgets()` call~~ ✅ **COMPLETED**
+   - [x] ~~Improve memory management and file handling~~ ✅ **COMPLETED** 
    - [ ] Add proper error messages with file names
 
 2. **Basic Multiple File Support**
@@ -199,11 +202,17 @@ make
 
 ## Known Issues to Address
 
-1. Current `fgets()` implementation uses wrong buffer size parameter
-2. No proper stream handling for large files
+1. ~~Current `fgets()` implementation uses wrong buffer size parameter~~ ✅ **FIXED**
+2. ~~No proper stream handling for large files~~ ✅ **IMPROVED** - Dynamic memory allocation implemented
 3. Missing argument validation
 4. No support for `--` to end option parsing
 5. Binary file detection and handling missing
+
+### Recent Improvements ✅
+- **Dynamic Memory Management**: Implemented proper `calloc()` and `realloc()` for handling lines of any length
+- **Automatic Buffer Resizing**: Buffer automatically doubles in size when needed
+- **Memory Leak Prevention**: Proper `free()` calls ensure no memory leaks
+- **Efficient Line Processing**: Reads file line-by-line instead of loading entire file into memory
 
 ## References
 
