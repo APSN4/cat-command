@@ -5,4 +5,6 @@ set(CMAKE_C_STANDARD 11)
 
 add_executable(cat_command main.c
         src/parser.h
-        src/parser.c)
+        src/parser.c
+        src/arguments.h
+        src/arguments.c)

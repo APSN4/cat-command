@@ -8,16 +8,12 @@
 #include "parser.h"
 
 void print_plain_text(char* path) {
-    FILE* pFile;
-    long fileSize;
-
-    pFile = fopen(path, "r");
+    FILE *pFile = fopen(path, "r");
     if (pFile == NULL) {
-        printf("Error While opening file.");
+        printf("Error While opening %s", path);
         exit(1);
     }
     fseek(pFile, 0, SEEK_END);
-    fileSize = ftell(pFile);
     rewind(pFile);
 
     int size_buf = MEM_BLOCK;
