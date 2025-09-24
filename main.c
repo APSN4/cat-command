@@ -4,7 +4,7 @@
 
 int main(int argc, char* argv[]) {
     if (argc >= 2) {
-        check_use_arguments(argc, argv);
+        process_arguments(argc, argv);
         print_plain_text(argv[1]);
     } else {
         printf("Please choose a file.");

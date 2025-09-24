@@ -7,6 +7,6 @@
 
 extern const char *reserve_args[];
 
-void check_use_arguments(int argc, char* argv[]);
+void process_arguments(int argc, char* argv[]);
 
 #endif //ARGUMENTS_H

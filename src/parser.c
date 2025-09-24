@@ -42,3 +42,7 @@ void print_plain_text(char* path) {
     free(str);
     fclose(pFile);
 }
+
+void process_files(char* paths[]) {
+
+}
