@@ -4,9 +4,10 @@
 
 #ifndef ARGUMENTS_H
 #define ARGUMENTS_H
+#include <stdbool.h>
 
 extern const char *reserve_args[];
 
-void process_arguments(int argc, char* argv[]);
+bool process_arguments(int argc, char* argv[]);
 
 #endif //ARGUMENTS_H
