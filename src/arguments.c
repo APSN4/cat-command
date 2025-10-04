@@ -8,6 +8,7 @@
 #include <unistd.h>
 
 #include <stdbool.h>
+#include <stdlib.h>
 
 const char *reserve_args[] = {
     "-A",
@@ -78,17 +79,24 @@ struct cat_options {
     bool show_all;          // -A, --show-all
     bool help;              // --help
     bool version;           // --version
-    bool file_present;      // Indicates whether the given file exists in the arguments
     bool is_args;           // True if any argument starts with '-'
+
+    int *files_i;           // dynamic array of indices
 } cat_options;
 
 // TODO: implement logic to handle function arguments
-bool process_arguments(int argc, char *argv[]) {
+int* process_arguments(int argc, char *argv[], int *count_files) {
     const int len_commands = sizeof(reserve_args) / sizeof(reserve_args[0]);
-    for (int i = 0; i < len_commands; i++) {
-        for (int j = 0; j < argc; j++) {
-            if (strcmp(reserve_args[i], argv[j]) == 0) {
-                switch (i) {
+    cat_options.files_i = malloc(argc * sizeof(int));
+    *count_files = 0;
+    if (!cat_options.files_i) {
+        perror("malloc");
+        return NULL;
+    }
+    for (int i = 0; i < argc; i++) {
+        for (int j = 0; j < len_commands; j++) {
+            if (strcmp(reserve_args[j], argv[i]) == 0) {
+                switch (j) {
                     case 0:
                     case 1:
                         cat_options.show_all = true;
@@ -127,20 +135,20 @@ bool process_arguments(int argc, char *argv[]) {
                         break;
                 }
             }
-            if (argv[j][0] != '-' && j != 0 && !cat_options.file_present) {
-                if (access(argv[j], F_OK) == 0) {
-                    cat_options.file_present = true;
-                }
+        }
+        if (argv[i][0] != '-' && i != 0) {
+            if (access(argv[i], F_OK) == 0) {
+                cat_options.files_i[(*count_files)++] = i;
             }
-            if (argv[j][0] == '-') {
-                cat_options.is_args = true;
-            }
+        }
+        if (argv[i][0] == '-') {
+            cat_options.is_args = true;
         }
     }
     if (cat_options.help) {
         printf(help_text, argv[0], argv[0], argv[0], argv[0], argv[0], argv[0],
                argv[0], argv[0]);
-        return true;
+        return NULL;
     }
     if (!cat_options.number_lines &&
      !cat_options.number_nonblank &&
@@ -150,11 +158,11 @@ bool process_arguments(int argc, char *argv[]) {
      !cat_options.squeeze_blank &&
      !cat_options.show_all && cat_options.is_args) {
         printf("%s", default_text);
-        return true;
+        return NULL;
     }
-    if (!cat_options.file_present) {
+    if (*count_files == 0) {
         printf("%s", file_text);
-        return true;
+        return NULL;
     }
-    return false;
+    return cat_options.files_i;
 }

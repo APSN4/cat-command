@@ -6,10 +6,13 @@
 
 int main(int argc, char *argv[]) {
     if (argc >= 2) {
-        const bool is_exit = process_arguments(argc, argv);
-        if (is_exit)
+        int count_files;
+        const int* files_i = process_arguments(argc, argv, &count_files);
+        if (!files_i)
             exit(EXIT_FAILURE);
-        print_plain_text(argv[1]);
+        for (int i = 0; i < count_files; i++) {
+            print_plain_text(argv[files_i[i]]);
+        }
     } else {
         printf("Please choose a file.\n");
     }

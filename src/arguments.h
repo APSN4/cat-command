@@ -8,6 +8,6 @@
 
 extern const char *reserve_args[];
 
-bool process_arguments(int argc, char* argv[]);
+int* process_arguments(int argc, char* argv[], int *count_files);
 
 #endif //ARGUMENTS_H
