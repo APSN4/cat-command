@@ -12,6 +12,7 @@ int main(int argc, char *argv[]) {
             exit(EXIT_FAILURE);
         for (int i = 0; i < count_files; i++) {
             print_plain_text(argv[files_i[i]]);
+            printf("\n\n");
         }
     } else {
         printf("Please choose a file.\n");
