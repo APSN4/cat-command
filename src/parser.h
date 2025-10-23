@@ -19,5 +19,6 @@
 
 int find_end_line(int* now_pointer, int* last_pointer);
 void print_plain_text(char* path);
+bool is_binary_file(char* path);
 
 #endif //PARSER_H

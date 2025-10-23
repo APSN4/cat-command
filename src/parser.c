@@ -11,7 +11,7 @@ void print_plain_text(char* path) {
     FILE *pFile = fopen(path, "r");
     if (pFile == NULL) {
         printf("Error While opening %s", path);
-        exit(1);
+        return;
     }
     fseek(pFile, 0, SEEK_END);
     rewind(pFile);
@@ -20,7 +20,7 @@ void print_plain_text(char* path) {
     int size_buf = MEM_BLOCK; // read buffer
     char *str = calloc(cap_str, sizeof(char));
     char *str_new = calloc(size_buf, sizeof(char));
-    if (!str || !str_new) { printf("OOM\n"); exit(1); }
+    if (!str || !str_new) { printf("OOM\n"); return; }
 
     while (fgets(str_new, size_buf, pFile) != NULL) {
 
@@ -29,7 +29,7 @@ void print_plain_text(char* path) {
             size_buf *= 2;
 
             char *tmp_new = realloc(str_new, size_buf);
-            if (!tmp_new) { printf("Could not reallocate memory!\n"); exit(1); }
+            if (!tmp_new) { printf("Could not reallocate memory!\n"); return; }
             str_new = tmp_new;
         }
 
@@ -38,7 +38,7 @@ void print_plain_text(char* path) {
         if (need > (size_t)cap_str) {
             while (need > (size_t)cap_str) cap_str *= 2;
             char *tmp = realloc(str, cap_str);
-            if (!tmp) { printf("Could not reallocate memory!\n"); exit(1); }
+            if (!tmp) { printf("Could not reallocate memory!\n"); return; }
             str = tmp;
         }
 
@@ -71,4 +71,8 @@ void print_plain_text(char* path) {
 
 void process_files(char* paths[]) {
 
+}
+
+bool is_binary_file(char* path) {
+    return false;
 }

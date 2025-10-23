@@ -18,7 +18,7 @@ This project aims to create a fully-featured analog of the `cat` command found i
 2. **Basic Multiple File Support**
    - [x] Handle multiple file arguments: `cat file1.txt file2.txt file3.txt`
    - [x] Concatenate files in the order specified
-   - [ ] Continue processing remaining files if one fails
+   - [x] Continue processing remaining files if one fails
 
 3. **Standard Input Support**
    - [ ] Read from stdin when no arguments provided: `cat`
